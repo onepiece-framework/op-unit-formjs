@@ -1,0 +1,23 @@
+<?php
+/**
+ * unit-formjs:/test.css
+ *
+ * @created   2018-08-03
+ * @version   1.0
+ * @package   unit-form
+ * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
+ * @copyright Tomoaki Nagahara All right reserved.
+ */
+ ?>
+<style>
+form.OP {
+	border: 1px solid black;
+	margin-bottom: 1em;
+	padding: 1em;
+}
+
+form.OP label input {
+	border:1px solid black;
+	margin-right: 0.5em;
+}
+</style>

@@ -1,0 +1,102 @@
+<?php
+/**
+ * unit-formjs:/test-1.html
+ *
+ * @created   2018-08-03
+ * @version   1.0
+ * @package   unit-form
+ * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
+ * @copyright Tomoaki Nagahara All right reserved.
+ */
+?>
+<h2>test-1.html</h2>
+<form name="test-1" class="OP">
+	<!-- Menu -->
+	<menu>
+		|
+		<a href='?text=TOM & JERRY'>TOM & JERRY</a> |
+		<a href='?text=space %26 C++'>Space & C++</a> |
+		<a href='?text=">XSS<"'>XSS</a> |
+	</menu>
+
+	<!-- text -->
+	<input type="text" name="text" value="test" />
+	<button class="button"> submit </button><br/>
+
+	<!-- textarea -->
+	<textarea name="textarea"></textarea><br/>
+
+	<!-- select -->
+	<select name="select">
+		<option></option>
+		<option>A</option>
+		<option value="b">B</option>
+		<option selected>C</option>
+	</select>
+
+	<!-- radio -->
+	<input type="radio" name="radio" value="A" />A
+	<input type="radio" name="radio" value="B" checked />B
+	<input type="radio" name="radio" value="C" />C
+	<br/>
+
+	<!-- checkbox -->
+	<input type="checkbox" name="checkbox[]" value="A" />A
+	<input type="checkbox" name="checkbox[]" value="B" checked />B
+	<input type="checkbox" name="checkbox[]" value="C" checked />C
+	<input type="hidden"   name="checkbox[]" value="" />
+	<br/>
+</form>
+<form name="receive" class="OP">
+	<input type="text" name="text" value="" />
+	<button class="button"> submit </button><br/>
+	<textarea name="textarea"></textarea><br/>
+	<select name="select">
+		<option></option>
+		<option value="A">A</option>
+		<option value="b">B</option>
+		<option selected>C</option>
+	</select>
+	<input type="radio" name="radio" value="A" />A
+	<input type="radio" name="radio" value="B" />B
+	<input type="radio" name="radio" value="C" />C
+	<br/>
+	<input type="checkbox" name="checkbox[]" value="A" />A
+	<input type="checkbox" name="checkbox[]" value="B" />B
+	<input type="checkbox" name="checkbox[]" value="C" />C
+	<br/>
+</form>
+<script>
+//	...
+$form = $OP.Form('test-1');
+D( $form, $form.Test() );
+
+//	...
+for( var name of ['text','textarea','select','radio','checkbox','hoge'] ){
+	//	...
+	$input = $form.Input(name);
+
+	//	...
+	if(!$input.Test() ){
+		D(`${name} is failed.`);
+		continue;
+	};
+
+	//	...
+	if( name === 'checkbox' ){
+	//	$input.Value({'A':true, 'C':false}, true);
+	};
+
+	//	...
+	var value = $input.Value();
+	$OP.Form('receive').Input(name).Value(value);
+
+	//	...
+	$input.Event('change', function(e, input){
+		var name  = input.Name();
+		var value = input.Value();
+		$OP.Form('receive').Input(name).Value(value);
+	});
+}
+</script>
+<hr/>
